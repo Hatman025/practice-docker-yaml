@@ -1,1 +1,16 @@
+name: microservice CI
 
+on:
+  workflow_call:
+    inputs:
+      service:
+        type: string
+        required: true
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "$SERVICE"
+        env:
+          SERVICE: ${{ inputs.service }}
