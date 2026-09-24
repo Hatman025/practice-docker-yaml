@@ -4,7 +4,7 @@ on:
   push
 jobs:
   frontend:
-    uses: ./.github/workflows/microservices.yaml
+    uses: ./.github/workflows/microservices-ci.yaml
     with:
       service: frontend
     
