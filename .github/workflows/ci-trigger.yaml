@@ -1,17 +1,10 @@
 name: Microservices Tigger CI
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-     - "src/**"
-  workflow_dispatch: {}
-
-permissions:
-   contents: read
-   packages: write
-
-concurrency: 
-  group: microservices-ci-${{ github.ref }}
-  cancel-in-progress: false
-
+  push
+jobs:
+  frontend:
+    uses: ./.github/workflows/microservices.yaml
+    with:
+      service: frontend
+    
