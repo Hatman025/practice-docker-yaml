@@ -2,6 +2,9 @@ name: Microservices Tigger CI
 
 on:
   push
+permissions: 
+  contents: read
+  packages: write
 jobs:
   frontend:
     uses: ./.github/workflows/microservice-ci.yaml
