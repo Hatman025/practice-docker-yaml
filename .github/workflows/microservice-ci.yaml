@@ -14,5 +14,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: echo "$SERVICE"
-      - run: docker build -t "$SERVICE" "./$SERVICE"
+      - run: docker build -t "$SERVICE" "./src/$SERVICE"
         
