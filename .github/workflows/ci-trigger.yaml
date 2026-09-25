@@ -6,8 +6,22 @@ permissions:
   contents: read
   packages: write
 jobs:
-  frontend:
+  build:
+    strategy:
+      matrix:
+        service:
+          - frontend
+          - adservice
+          - cartservice
+          - checkoutservice
+          - currencyservice
+          - emailservice
+          - paymentservice
+          - productcatalogservice
+          - recommendationservice
+          - shippingservice
+          - shoppingassistantservice
     uses: ./.github/workflows/microservice-ci.yaml
     with:
-      service: frontend
+      service: ${{ matrix.service }}
     
