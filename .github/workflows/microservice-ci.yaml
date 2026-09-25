@@ -6,6 +6,10 @@ on:
       service:
         type: string
         required: true
+      dockerfile:
+        type: string
+        required: false
+        default: ''
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,12 +30,17 @@ jobs:
         run: |
           OWNER="${GITHUB_REPOSITORY_NAME,,}"
           echo "IMAGE=ghcr.io/OWNER/$SERVICE:${GITHUB_SHA}" >> "$GITHUB_ENV"
-      
-      - run: docker build -t "$SERVICE" "./src/$SERVICE"
+      - name: Build
+        env:
+          DOCKERFILE: ${{ inputs.dockerfile }}
+        run: |
+          FILE:"${DOCKERFILE:-./src/$SERVICE/Dockerfile}"
+          docker build -f "$FILE" -t "$IMAGE" "./src/$SERVICE"
       - uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           image-ref: ${{ inputs.service }}
           severity: HIGH,CRITICAL
           ignore-unfixed: true
           exit-code: 0
+      - run: docker push "$IMAGE"
         
