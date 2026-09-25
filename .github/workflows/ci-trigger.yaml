@@ -22,7 +22,11 @@ jobs:
           - recommendationservice
           - shippingservice
           - shoppingassistantservice
+        include:
+          - service: cartservice
+            dockerfile: ./src/cartservice/docker/Dockerfile
     uses: ./.github/workflows/microservice-ci.yaml
     with:
       service: ${{ matrix.service }}
+      dockerfile: ${{ matrix.dockerfile }}
     
