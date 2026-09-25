@@ -24,7 +24,7 @@ jobs:
       - run: echo "$SERVICE"
       - name: Set image tag
         run: |
-          OWNER:"${Hatman025}"
+          OWNER:"${Hatman025,,}"
           echo "IMAGE=ghcr.io/OWNER/$SERVICE:${GITHUB_SHA}" >> "$GITHUB_ENV"
       
       - run: docker build -t "$SERVICE" "./src/$SERVICE"
