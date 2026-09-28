@@ -29,7 +29,7 @@ jobs:
       - name: Set image tag
         run: |
           OWNER="${GITHUB_REPOSITORY_OWNER,,}"
-          IMAGE=ghcr.io/$OWNER/$SERVICE:${GITHUB_SHA}" >> "$GITHUB_ENV"
+          IMAGE="ghcr.io/$OWNER/$SERVICE:${GITHUB_SHA}" >> "$GITHUB_ENV"
           echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
           echo "image=$IMAGE" >> "$GITHUB_OUTPUT"
       - name: Build
