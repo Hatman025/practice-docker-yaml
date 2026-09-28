@@ -27,9 +27,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - run: echo "$SERVICE"
       - name: Set image tag
+        id: tag
         run: |
           OWNER="${GITHUB_REPOSITORY_OWNER,,}"
-          IMAGE="ghcr.io/$OWNER/$SERVICE:${GITHUB_SHA}" >> "$GITHUB_ENV"
+          IMAGE="ghcr.io/$OWNER/$SERVICE:${GITHUB_SHA}"
           echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
           echo "image=$IMAGE" >> "$GITHUB_OUTPUT"
       - name: Build
@@ -37,7 +38,7 @@ jobs:
           DOCKERFILE: ${{ inputs.dockerfile }}
         run: |
           FILE="${DOCKERFILE:-./src/$SERVICE/Dockerfile}"
-          CONTEXT="(dirname "$FILE")"
+          CONTEXT="$(dirname "$FILE")"
           docker build -f "$FILE" -t "$IMAGE" "$CONTEXT"
       - uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
